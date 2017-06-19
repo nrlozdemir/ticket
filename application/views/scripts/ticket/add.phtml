@@ -1,0 +1,141 @@
+<?php
+$this->headLink()->appendStylesheet($this->baseUrl().'/assets/css/normalize.css');
+$this->headLink()->appendStylesheet($this->baseUrl().'/assets/css/bootstrap.min.css');
+$this->headScript()->appendFile($this->baseUrl().'/assets/js/jquery-3.2.1.min.js');
+$this->headScript()->appendFile($this->baseUrl().'/assets/js/bootstrap.min.js');
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Ticket Application</title>
+    <?php echo $this->headLink(); ?>
+
+    <?php echo $this->headScript(); ?>
+
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="<?php echo $this->url(array('controller' => 'index'), 'default', true); ?>">Homepage</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ticket Actions <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="<?php echo $this->url(array('controller' => 'ticket', 'action' => 'add'), 'default', true); ?>">Add Ticket</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="<?php echo $this->url(array('controller' => 'ticket', 'action' => 'index'), 'default', true); ?>">Ticket List</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Api<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="<?php echo $this->url(array('controller' => 'api', 'action' => 'csv'), 'default', true); ?>">CSV Export</a></li>
+                        <li><a href="<?php echo $this->url(array('controller' => 'api', 'action' => 'index'), 'default', true); ?>">JSON Export</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container theme-showcase" role="main">
+    <div class="jumbotron">
+        <h1>Ticket Application</h1>
+
+        <p>Add Ticket</p>
+    </div>
+</div>
+
+<div class="container">
+    <?php
+    if($this->inserted == 1)
+    {
+    ?>
+    <div class="row">
+        <div class="col-md-12">
+            <p class="bg-success"><?php echo $this->templateMessage; ?></p>
+        </div>
+    </div>
+    <?php
+    }
+    else
+    {
+    ?>
+    <div class="row">
+        <div class="col-md-12">
+            <p class="bg-danger"><?php echo $this->templateMessage; ?></p>
+        </div>
+    </div>
+    <?php
+    }
+    ?>
+    <?php
+    if(strlen($this->errorMessageStr) > 0)
+    {
+    ?>
+    <div class="row">
+        <div class="col-md-12">
+            <p class="bg-danger"><?php echo $this->errorMessageStr; ?></p>
+        </div>
+    </div>
+    <?php
+    }
+    ?>
+
+    <form action="<?php echo $this->url(array('controller' => 'ticket', 'action' => 'add'), 'default', true); ?>" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-6 col-xs-12 col-sm-6 col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Form</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="header">Header :</label>
+                            <input id="header" type="text" name="header" class="form-control col-md-12">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description :</label>
+                            <input id="description" type="text" name="description" class="form-control col-md-12">
+                        </div>
+                        <div class="form-group">
+                            <label for="priority">Priority :</label>
+                            <select id="priority" name="priority" class="form-control col-md-12">
+                                <?php
+                                for($i = 1; $i <= 6; $i++)
+                                {
+                                    ?>
+                                    <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                    <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="attachment">Attachment :</label>
+                            <input id="attachment" type="file" name="attachment" class=" col-md-12">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-success">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
